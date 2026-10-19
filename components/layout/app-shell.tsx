@@ -11,6 +11,14 @@ const navigation = [
   { href: "/safety", label: "Safety", icon: ShieldAlert },
   { href: "/about", label: "About", icon: Compass },
 ];
+const pageNames: Record<string, string> = {
+  "/": "Home",
+  "/dashboard": "Dashboard",
+  "/scanner": "Scanner",
+  "/safety": "Safety",
+  "/about": "About",
+  "/settings": "Accessibility settings",
+};
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -44,6 +52,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       <main id="main-content" className="main-content">{children}</main>
+      <p className="visually-hidden" role="status" aria-live="assertive" aria-atomic="true">Page changed: {pageNames[pathname] ?? "DishaAI"}.</p>
       <nav className="mobile-nav" aria-label="Mobile navigation">{renderNav()}</nav>
       <footer className="site-footer">
         <span>DishaAI · An assistive technology prototype</span>

@@ -7,12 +7,12 @@ export const welcomeGreetingSessionKey = "dishaai-welcome-spoken";
 
 export function welcomeGreeting(language: string, pageName = "DishaAI") {
   if (language.toLowerCase().startsWith("bn")) {
-    return `দিশা এ আই-তে স্বাগতম। আপনি এখন ${pageName} পৃষ্ঠায় আছেন। হাত ছাড়া চালাতে প্রথমে Start voice commands চালু করুন। তারপর Scanner, Safety, বা Dashboard বলুন।`;
+    return `দিশা এ আই-তে স্বাগতম। আপনি এখন ${pageName} পৃষ্ঠায় আছেন। হাতে-কলমে নেভিগেট করতে স্ক্যানার, সেফটি, ড্যাশবোর্ড, বা হোম বলুন।`;
   }
   if (language.toLowerCase().startsWith("hi")) {
-    return `दिशा ए आई में आपका स्वागत है। आप ${pageName} पेज पर हैं। हैंड्स-फ़्री नियंत्रण के लिए पहले Start voice commands चालू करें। फिर Scanner, Safety, या Dashboard कहें।`;
+    return `दिशा ए आई में आपका स्वागत है। आप ${pageName} पेज पर हैं। हाथों से नेविगेट करने के लिए स्कैनर, सुरक्षा, डैशबोर्ड, या होम कहें।`;
   }
-  return `Welcome to DishaAI. You are on ${pageName}. Voice commands are available after you activate Start voice commands. Say Scanner, Safety, Dashboard, or Home to navigate hands-free.`;
+  return `Welcome to DishaAI. You are on ${pageName}. Say Scanner, Safety, Dashboard, or Home to navigate hands-free.`;
 }
 
 export function speechSupported() {

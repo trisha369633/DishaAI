@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Mic, MicOff } from "lucide-react";
 import { useAccessibilityPreferences } from "@/components/accessibility/accessibility-provider";
@@ -28,6 +28,11 @@ export default function VoiceCommandControls() {
       setCommandFeedback("Speech stopped.");
       return;
     }
+    if (command === "scanner" || command === "safety" || command === "dashboard" || command === "home") {
+      const target = command === "scanner" ? "/scanner" : command === "safety" ? "/safety" : command === "home" ? "/" : "/dashboard";
+      router.push(target);
+      return;
+    }
     const action = command === "scan" ? "scan" : "emergency";
     const target = action === "scan" ? "/scanner" : "/safety";
     if (pathname === target) dispatchVoiceAction(action);
@@ -38,6 +43,22 @@ export default function VoiceCommandControls() {
   }, [pathname, router, speech]);
 
   const voice = useVoiceCommands({ language: preferences.speechLanguage, onCommand: handleCommand });
+  const startListeningRef = useRef(voice.startListening);
+  useEffect(() => { startListeningRef.current = voice.startListening; }, [voice.startListening]);
+  useEffect(() => {
+    if (pathname !== "/dashboard") return;
+    let timer: number;
+    const startAfterWelcome = (deadline: number) => {
+      const synthesis = "speechSynthesis" in window ? window.speechSynthesis : null;
+      if (synthesis && (synthesis.speaking || synthesis.pending) && Date.now() < deadline) {
+        timer = window.setTimeout(() => startAfterWelcome(deadline), 250);
+        return;
+      }
+      startListeningRef.current();
+    };
+    timer = window.setTimeout(() => startAfterWelcome(Date.now() + 15000), 750);
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
   const listening = voice.status === "listening" || voice.status === "starting";
   const urgentAnnouncement = voice.status === "denied" || voice.status === "error" || voice.status === "unsupported";
 

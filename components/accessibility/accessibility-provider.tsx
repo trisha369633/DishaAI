@@ -23,7 +23,7 @@ const defaults: AccessibilityPreferences = {
   highContrast: false,
   largeText: false,
   reducedMotion: false,
-  voiceGuidance: true,
+  voiceGuidance: false,
   speechRate: 1,
   speechLanguage: "en-US",
   speechVoice: "",

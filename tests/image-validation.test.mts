@@ -47,25 +47,33 @@ test("rejects invalid Gemini box coordinates", () => {
 
 test("maps English, Bangla, and Hindi voice commands", () => {
   assert.equal(parseVoiceCommand("Start scanning!"), "scan");
+  assert.equal(parseVoiceCommand("Scanner"), "scanner");
+  assert.equal(parseVoiceCommand("স্ক্যানার"), "scanner");
+  assert.equal(parseVoiceCommand("Safety"), "safety");
+  assert.equal(parseVoiceCommand("সেফটি"), "safety");
+  assert.equal(parseVoiceCommand("সাহায্য"), "safety");
+  assert.equal(parseVoiceCommand("Dashboard"), "dashboard");
+  assert.equal(parseVoiceCommand("ড্যাশবোর্ড"), "dashboard");
+  assert.equal(parseVoiceCommand("Home"), "home");
   assert.equal(parseVoiceCommand("শুরু"), "scan");
   assert.equal(parseVoiceCommand("शुरू"), "scan");
   assert.equal(parseVoiceCommand("আবার বলো"), "repeat");
   assert.equal(parseVoiceCommand("दोहराओ"), "repeat");
   assert.equal(parseVoiceCommand("থামো"), "stop");
   assert.equal(parseVoiceCommand("रुको"), "stop");
-  assert.equal(parseVoiceCommand("সাহায্য"), "emergency");
+  assert.equal(parseVoiceCommand("জরুরি"), "emergency");
   assert.equal(parseVoiceCommand("मदद"), "emergency");
   assert.equal(parseVoiceCommand("অচেনা কথা"), null);
 });
 
 test("provides a welcome greeting in English, Bangla, and Hindi", () => {
-  assert.match(welcomeGreeting("en-US"), /Welcome to DishaAI\. Voice control is ready\./);
+  assert.match(welcomeGreeting("en-US", "Dashboard"), /You are on Dashboard\. Say Scanner, Safety, Dashboard, or Home to navigate hands-free\./);
   assert.match(welcomeGreeting("bn-BD"), /স্বাগতম/);
   assert.match(welcomeGreeting("hi-IN"), /स्वागत/);
 });
 
 test("localizes voice command prompts and recovery messages", () => {
-  assert.match(voiceCommandMessages("bn-BD").listening, /সাহায্য/);
+  assert.match(voiceCommandMessages("bn-BD").listening, /সেফটি/);
   assert.match(voiceCommandMessages("bn-BD").unknown, /বোঝা যায়নি/);
   assert.match(voiceCommandMessages("hi-IN").listening, /मदद/);
   assert.match(voiceCommandMessages("hi-IN").denied, /अनुमति/);
