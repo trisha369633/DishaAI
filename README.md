@@ -145,3 +145,4 @@ public/
 - Replace the current Roboflow project-only value `dishaai` with its deployed `project/version` ID if you want to use Roboflow.
 - Review model capabilities and the selected provider's image-handling terms.
 - Test camera permission, speech voices, keyboard/screen-reader behavior, and the SOS phone handoff on the target devices before any real-world use.# DishaAI
+# DishaAI
